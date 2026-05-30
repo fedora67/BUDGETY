@@ -10,7 +10,9 @@ import {
   PastMonthSummary, 
   SpecialMonthTag, 
   FixedCommitment,
-  MonthlyBill
+  MonthlyBill,
+  PocketMoneyChild,
+  PocketMoneyTransaction
 } from './types';
 
 // Default categories as defined by specifications
@@ -37,7 +39,9 @@ const KEYS = {
   IO_TRACKER: 'budgety_iotracker',
   MONTH_HISTORY: 'budgety_monthhistory',
   SPECIAL_MONTHS: 'budgety_specialmonths',
-  BILLS: 'budgety_bills'
+  BILLS: 'budgety_bills',
+  POCKET_MONEY_CHILDREN: 'budgety_pocketmoney_children',
+  POCKET_MONEY_TRANSACTIONS: 'budgety_pocketmoney_transactions'
 };
 
 const getKey = (baseKey: string): string => {
@@ -359,4 +363,24 @@ export const clearSampleData = () => {
 
   setMonthHistory([]);
   localStorage.removeItem('budgety_sample_data_v2');
+};
+
+// ── POCKET MONEY ──────────────────────────────────────────────────────────────
+
+export const getPocketMoneyChildren = (): PocketMoneyChild[] => {
+  const data = localStorage.getItem(getKey(KEYS.POCKET_MONEY_CHILDREN));
+  return data ? JSON.parse(data) : [];
+};
+
+export const setPocketMoneyChildren = (children: PocketMoneyChild[]): void => {
+  localStorage.setItem(getKey(KEYS.POCKET_MONEY_CHILDREN), JSON.stringify(children));
+};
+
+export const getPocketMoneyTransactions = (): PocketMoneyTransaction[] => {
+  const data = localStorage.getItem(getKey(KEYS.POCKET_MONEY_TRANSACTIONS));
+  return data ? JSON.parse(data) : [];
+};
+
+export const setPocketMoneyTransactions = (txns: PocketMoneyTransaction[]): void => {
+  localStorage.setItem(getKey(KEYS.POCKET_MONEY_TRANSACTIONS), JSON.stringify(txns));
 };

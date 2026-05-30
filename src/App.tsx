@@ -30,6 +30,7 @@ import SettingsView from './components/SettingsView';
 import GoalsView from './components/GoalsView';
 import PresetsView from './components/PresetsView';
 import BillsView from './components/BillsView';
+import PocketMoneyView from './components/PocketMoneyView';
 import { 
   LogOut, 
   TrendingUp, 
@@ -49,7 +50,8 @@ import {
   ChevronDown,
   X,
   Users,
-  ReceiptText
+  ReceiptText,
+  Wallet
 } from 'lucide-react';
 
 export default function App() {
@@ -142,6 +144,8 @@ export default function App() {
             setCurrentRoute('dashboard');
           } else if (hash === '#/bills') {
             setCurrentRoute('bills');
+          } else if (hash === '#/pocketmoney') {
+            setCurrentRoute('pocketmoney');
           } else {
             setCurrentRoute('expenses');
           }
@@ -166,6 +170,7 @@ export default function App() {
     else if (route === 'goals') window.location.hash = '#/goals';
     else if (route === 'presets') window.location.hash = '#/presets';
     else if (route === 'bills') window.location.hash = '#/bills';
+    else if (route === 'pocketmoney') window.location.hash = '#/pocketmoney';
   };
 
   const handleLoginSuccess = (name: string, email: string) => {
@@ -346,6 +351,15 @@ export default function App() {
                 </button>
 
                 <button
+                  onClick={() => navigateTo('pocketmoney')}
+                  className={`flex items-center gap-2.5 text-xs px-4 py-3 rounded-xl font-bold transition-all cursor-pointer text-left w-full ${currentRoute === 'pocketmoney' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
+                  title="Pocket Money"
+                >
+                  <Wallet className="w-4 h-4 shrink-0" />
+                  {!sidebarCollapsed && <span>Pocket Money</span>}
+                </button>
+
+                <button
                   onClick={() => navigateTo('goals')}
                   className={`flex items-center gap-2.5 text-xs px-4 py-3 rounded-xl font-bold transition-all cursor-pointer text-left w-full ${currentRoute === 'goals' ? 'bg-neutral-900 text-white' : 'text-neutral-600 hover:bg-neutral-100'}`}
                   title="Savings Goals"
@@ -465,6 +479,14 @@ export default function App() {
             </button>
 
             <button
+              onClick={() => navigateTo('pocketmoney')}
+              className={`flex flex-col items-center justify-center py-1 transition-all cursor-pointer ${currentRoute === 'pocketmoney' ? 'text-neutral-900 scale-105' : 'text-neutral-400'}`}
+            >
+              <Wallet className="w-4.5 h-4.5" />
+              <span className="text-[7.5px] font-bold mt-0.5 tracking-wide">Pocket₹</span>
+            </button>
+
+            <button
               onClick={() => navigateTo('goals')}
               className={`flex flex-col items-center justify-center py-1 transition-all cursor-pointer ${currentRoute === 'goals' ? 'text-neutral-900 scale-105' : 'text-neutral-400'}`}
             >
@@ -556,6 +578,12 @@ export default function App() {
               <BillsView 
                 onNavigate={navigateTo} 
                 selectedMonth={selectedMonth} 
+              />
+            )}
+            {currentRoute === 'pocketmoney' && (
+              <PocketMoneyView
+                onNavigate={navigateTo}
+                selectedMonth={selectedMonth}
               />
             )}
             {currentRoute === 'goals' && (

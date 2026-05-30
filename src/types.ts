@@ -104,3 +104,24 @@ export interface MonthlyBill {
   status: 'Paid' | 'Pending';
   category?: string;
 }
+
+export interface PocketMoneyChild {
+  id: string;
+  name: string;
+  totalAmount: number; // Total pocket money given
+  saving: number;      // 33% goes to saving
+  spend: number;       // 33% to spend
+  charity: number;     // 33% for those in need
+  monthKey: string;    // YYYY-MM
+  createdAt: string;   // ISO date string
+}
+
+export interface PocketMoneyTransaction {
+  id: string;
+  childId: string;
+  bucket: 'saving' | 'spend' | 'charity';
+  title: string;
+  amount: number;
+  date: string; // YYYY-MM-DD
+  note?: string;
+}
